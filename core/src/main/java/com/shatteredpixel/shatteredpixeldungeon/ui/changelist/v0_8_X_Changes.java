@@ -78,7 +78,7 @@ public class v0_8_X_Changes {
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.EVAN), "Developer Commentary",
 				"_-_ Released August 6th, 2020\n" +
 				"_-_ 40 days after Shattered v0.8.1\n" +
 				"\n" +
@@ -223,7 +223,7 @@ public class v0_8_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.EVAN), "Developer Commentary",
 				"_-_ Released June 27th, 2020\n" +
 				"_-_ 72 days after Shattered v0.8.0\n" +
 				"\n" +
@@ -431,7 +431,7 @@ public class v0_8_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.EVAN), "Developer Commentary",
 				"_-_ Released April 16th, 2020\n" +
 				"_-_ 546 days after Shattered v0.7.0\n" +
 				"_-_ 197 days after Shattered v0.7.5\n" +

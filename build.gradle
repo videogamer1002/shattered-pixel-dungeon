@@ -14,10 +14,10 @@ allprojects {
 
     ext {
         appName = 'Shattered Pixel Dungeon'
-        appPackageName = 'com.shatteredpixel.shatteredpixeldungeon'
+        appPackageName = 'com.videogamer1002.shatteredpixeldungeon'
 
-        appVersionCode = 448
-        appVersionName = '0.8.2'
+        appVersionCode = 1448
+        appVersionName = '0.0.1'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 

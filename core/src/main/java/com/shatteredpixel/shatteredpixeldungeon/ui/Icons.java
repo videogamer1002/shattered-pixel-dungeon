@@ -71,6 +71,7 @@ public enum Icons {
 	BADGES,
 	NEWS,
 	CHANGES,
+	EVAN,
 	SHPX,
 	
 	//misc icons
@@ -200,9 +201,11 @@ public enum Icons {
 		case CHANGES:
 			icon.frame( icon.texture.uvRect( 68, 64, 83, 79 ) );
 			break;
-		case SHPX:
+		case EVAN:
 			icon.frame( icon.texture.uvRect( 85, 64, 101, 80 ) );
 			break;
+		case SHPX:
+			icon.frame( icon.texture.uvRect( 86, 49, 100, 65 ) );
 		case GOLD:
 			icon.frame( icon.texture.uvRect( 102, 64, 119, 80 ) );
 			break;

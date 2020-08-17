@@ -57,20 +57,31 @@ public class AboutScene extends PixelScene {
 
 		//*** Shattered Pixel Dungeon Credits ***
 
-		String shpxLink = "https://ShatteredPixel.com";
+		String evanLink = "https://ShatteredPixel.com";
 		//tracking codes, so that the website knows where this pageview came from
-		shpxLink += "?utm_source=shatteredpd";
-		shpxLink += "&utm_medium=about_page";
-		shpxLink += "&utm_campaign=ingame_link";
+		evanLink += "?utm_source=videogamer1002LOL";
+		evanLink += "&utm_medium=about_page";
+		evanLink += "&utm_campaign=ingame_link";
+
+		String shpxLink = "https://discord.gg/yPNyjFW";
 
 		CreditsBlock shpx = new CreditsBlock(true, Window.SHPX_COLOR,
 				"Shattered Pixel Dungeon",
-				Icons.SHPX.get(),
-				"Developed by: _Evan Debenham_\nBased on Pixel Dungeon's open source",
-				"ShatteredPixel.com",
+				Icons.EVAN.get(),
+				"Developed by: _videogamer1002_\nBased on Shattered Pixel Dungeon's open source",
+				"videogamer1002's Discord",
 				shpxLink);
 		shpx.setRect((w - fullWidth)/2f, 6, 120, 0);
 		content.add(shpx);
+
+		CreditsBlock evan = new CreditsBlock(true, Window.SHPX_COLOR,
+				"Shattered Pixel Dungeon",
+				Icons.EVAN.get(),
+				"Developed by: _Evan Debenham_\nBased on Pixel Dungeon's open source",
+				"ShatteredPixel.com",
+				evanLink);
+		evan.setRect((w - fullWidth)/2f, 6, 120, 0);
+		content.add(evan);
 
 		CreditsBlock alex = new CreditsBlock(false, Window.SHPX_COLOR,
 				"Hero Art & Design:",
