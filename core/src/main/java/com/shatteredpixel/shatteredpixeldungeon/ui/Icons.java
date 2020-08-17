@@ -204,8 +204,9 @@ public enum Icons {
 		case EVAN:
 			icon.frame( icon.texture.uvRect( 85, 64, 101, 80 ) );
 			break;
-		case SHPX:
+        case SHPX:
 			icon.frame( icon.texture.uvRect( 86, 49, 100, 65 ) );
+			break;
 		case GOLD:
 			icon.frame( icon.texture.uvRect( 102, 64, 119, 80 ) );
 			break;
