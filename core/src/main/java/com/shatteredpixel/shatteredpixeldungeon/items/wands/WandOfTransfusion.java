@@ -134,10 +134,10 @@ public class WandOfTransfusion extends Wand {
 		}
 	}
 
-	@Override
-	protected int initialCharges() {
-		return 1;
-	}
+	//@Override
+	//protected int initialCharges() {
+	//	return 1;
+	//}
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {

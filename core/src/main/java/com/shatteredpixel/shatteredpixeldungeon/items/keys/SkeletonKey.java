@@ -49,7 +49,7 @@ public class SkeletonKey extends Key {
 
 	@Override
 	public boolean doPickUp(Hero hero) {
-		if(!SPDSettings.supportNagged()){
+		if(false){
 			try {
 				Dungeon.saveAll();
 				Game.runOnRenderThread(new Callback() {

@@ -102,32 +102,32 @@ public enum Document {
 	public static final String GUIDE_SEARCH_PAGE = "Examining_and_Searching";
 	
 	static {
-		ADVENTURERS_GUIDE.pages.put(GUIDE_INTRO_PAGE, 	DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Identifying", 		DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put(GUIDE_SEARCH_PAGE, 	DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Strength", 		DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Food", 			DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Levelling", 		DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Surprise_Attacks", DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Dieing", 			DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Looting", 		    DeviceCompat.isDebug());
-		ADVENTURERS_GUIDE.pages.put("Magic", 			DeviceCompat.isDebug());
+		ADVENTURERS_GUIDE.pages.put(GUIDE_INTRO_PAGE, 	true);
+		ADVENTURERS_GUIDE.pages.put("Identifying", 		true);
+		ADVENTURERS_GUIDE.pages.put(GUIDE_SEARCH_PAGE, 	true);
+		ADVENTURERS_GUIDE.pages.put("Strength", 		true);
+		ADVENTURERS_GUIDE.pages.put("Food", 			true);
+		ADVENTURERS_GUIDE.pages.put("Levelling", 		true);
+		ADVENTURERS_GUIDE.pages.put("Surprise_Attacks", true);
+		ADVENTURERS_GUIDE.pages.put("Dieing", 			true);
+		ADVENTURERS_GUIDE.pages.put("Looting", 		    true);
+		ADVENTURERS_GUIDE.pages.put("Magic", 			true);
 		
 		//sewers
-		ALCHEMY_GUIDE.pages.put("Potions",              DeviceCompat.isDebug());
-		ALCHEMY_GUIDE.pages.put("Stones",               DeviceCompat.isDebug());
-		ALCHEMY_GUIDE.pages.put("Energy_Food",          DeviceCompat.isDebug());
-		ALCHEMY_GUIDE.pages.put("Bombs",                DeviceCompat.isDebug());
-		//ALCHEMY_GUIDE.pages.put("Darts",              DeviceCompat.isDebug());
+		ALCHEMY_GUIDE.pages.put("Potions",              true);
+		ALCHEMY_GUIDE.pages.put("Stones",               true);
+		ALCHEMY_GUIDE.pages.put("Energy_Food",          true);
+		ALCHEMY_GUIDE.pages.put("Bombs",                true);
+		//ALCHEMY_GUIDE.pages.put("Darts",              true);
 		
 		//prison
-		ALCHEMY_GUIDE.pages.put("Exotic_Potions",       DeviceCompat.isDebug());
-		ALCHEMY_GUIDE.pages.put("Exotic_Scrolls",       DeviceCompat.isDebug());
+		ALCHEMY_GUIDE.pages.put("Exotic_Potions",       true);
+		ALCHEMY_GUIDE.pages.put("Exotic_Scrolls",       true);
 		
 		//caves
-		ALCHEMY_GUIDE.pages.put("Catalysts",            DeviceCompat.isDebug());
-		ALCHEMY_GUIDE.pages.put("Brews_Elixirs",        DeviceCompat.isDebug());
-		ALCHEMY_GUIDE.pages.put("Spells",               DeviceCompat.isDebug());
+		ALCHEMY_GUIDE.pages.put("Catalysts",            true);
+		ALCHEMY_GUIDE.pages.put("Brews_Elixirs",        true);
+		ALCHEMY_GUIDE.pages.put("Spells",               true);
 	}
 	
 	private static final String DOCUMENTS = "documents";

@@ -37,8 +37,8 @@ public class TargetedCell extends Image {
 		origin.set( width/2f );
 
 		point( DungeonTilemap.tileToWorld( pos ) );
-
 		alpha = 1f;
+
 	}
 
 	@Override

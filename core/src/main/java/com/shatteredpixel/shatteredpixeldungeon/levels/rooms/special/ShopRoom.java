@@ -191,8 +191,11 @@ public class ShopRoom extends SpecialRoom {
 		itemsToSpawn.add( new MerchantsBeacon() );
 
 
-		itemsToSpawn.add(ChooseBag(Dungeon.hero.belongings));
-
+		if (Dungeon.depth != 16) {
+			itemsToSpawn.add(ChooseBag(Dungeon.hero.belongings));
+		} else {
+			itemsToSpawn.add( new MagicalHolster() );
+		}
 
 		itemsToSpawn.add( new PotionOfHealing() );
 		itemsToSpawn.add( Generator.randomUsingDefaults( Generator.Category.POTION ) );
@@ -284,7 +287,6 @@ public class ShopRoom extends SpecialRoom {
 		if (!Dungeon.LimitedDrops.VELVET_POUCH.dropped()) bags.put(new VelvetPouch(), 1);
 		if (!Dungeon.LimitedDrops.SCROLL_HOLDER.dropped()) bags.put(new ScrollHolder(), 0);
 		if (!Dungeon.LimitedDrops.POTION_BANDOLIER.dropped()) bags.put(new PotionBandolier(), 0);
-		if (!Dungeon.LimitedDrops.MAGICAL_HOLSTER.dropped()) bags.put(new MagicalHolster(), 0);
 
 		if (bags.isEmpty()) return null;
 
@@ -313,8 +315,6 @@ public class ShopRoom extends SpecialRoom {
 			Dungeon.LimitedDrops.SCROLL_HOLDER.drop();
 		} else if (bestBag instanceof PotionBandolier){
 			Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
-		} else if (bestBag instanceof MagicalHolster){
-			Dungeon.LimitedDrops.MAGICAL_HOLSTER.drop();
 		}
 
 		return bestBag;

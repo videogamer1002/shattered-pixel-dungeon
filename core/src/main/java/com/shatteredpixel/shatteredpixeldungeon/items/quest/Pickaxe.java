@@ -67,17 +67,19 @@ public class Pickaxe extends Weapon {
 
 	@Override
 	public int min(int lvl) {
-		return 2;   //tier 2
+		return 2 + lvl;
 	}
 
 	@Override
 	public int max(int lvl) {
-		return 15;  //tier 2
+		return 15 + (lvl * 3);
 	}
 
 	@Override
-	public int STRReq(int lvl) {
-		return 14;  //tier 3
+	public int STRReq(int lvl){
+		lvl = Math.max(0, lvl);
+		//strength req decreases at +1,+3,+6,+10,etc.
+		return (14) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
 	}
 
 	@Override
@@ -140,7 +142,7 @@ public class Pickaxe extends Weapon {
 	
 	@Override
 	public boolean isUpgradable() {
-		return false;
+		return true;
 	}
 	
 	@Override
