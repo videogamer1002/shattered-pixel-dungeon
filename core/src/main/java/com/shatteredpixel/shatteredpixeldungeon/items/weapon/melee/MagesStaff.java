@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,6 @@ public class MagesStaff extends MeleeWeapon {
 		this.wand = wand;
 		updateWand(false);
 		wand.curCharges = wand.maxCharges;
-		name = Messages.get(wand, "staff_name");
 	}
 
 	@Override
@@ -202,8 +201,6 @@ public class MagesStaff extends MeleeWeapon {
 		wand.curCharges = wand.maxCharges;
 		if (owner != null) wand.charge(owner);
 
-		name = Messages.get(wand, "staff_name");
-
 		//This is necessary to reset any particles.
 		//FIXME this is gross, should implement a better way to fully reset quickslot visuals
 		int slot = Dungeon.quickslot.getSlot(this);
@@ -265,6 +262,16 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
+	public String name() {
+		if (wand == null) {
+			return super.name();
+		} else {
+			String name = Messages.get(wand, "staff_name");
+			return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name( name ) : name;
+		}
+	}
+
+	@Override
 	public String info() {
 		String info = super.info();
 
@@ -303,7 +310,6 @@ public class MagesStaff extends MeleeWeapon {
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {
 			wand.maxCharges = Math.min(wand.maxCharges + 1, 10);
-			name = Messages.get(wand, "staff_name");
 		}
 	}
 

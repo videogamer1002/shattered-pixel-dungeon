@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,17 +60,9 @@ public class Berserk extends Buff {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		//pre-0.6.5 saves
-		if (bundle.contains("exhaustion")){
-			state = State.RECOVERING;
-		} else {
-			state = bundle.getEnum(STATE, State.class);
-		}
-		if (bundle.contains(POWER)){
-			power = bundle.getFloat(POWER);
-		} else {
-			power = 1f;
-		}
+
+		state = bundle.getEnum(STATE, State.class);
+		power = bundle.getFloat(POWER);
 		if (state == State.RECOVERING) levelRecovery = bundle.getFloat(LEVEL_RECOVERY);
 	}
 

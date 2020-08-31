@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,15 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.Rankings;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BannerSprites;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
@@ -52,7 +49,7 @@ public class WelcomeScene extends PixelScene {
 
 		final int previousVersion = SPDSettings.version();
 
-		if (ShatteredPixelDungeon.versionCode == previousVersion) {
+		if (ShatteredPixelDungeon.versionCode == previousVersion && !SPDSettings.intro()) {
 			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
 			return;
 		}
@@ -96,7 +93,7 @@ public class WelcomeScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				if (previousVersion == 0){
+				if (previousVersion == 0 || SPDSettings.intro()){
 					SPDSettings.version(ShatteredPixelDungeon.versionCode);
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
@@ -110,7 +107,7 @@ public class WelcomeScene extends PixelScene {
 
 		float buttonY = Math.min(topRegion + (PixelScene.landscape() ? 60 : 120), h - 24);
 
-		if (previousVersion != 0){
+		if (previousVersion != 0 && !SPDSettings.intro()){
 			StyledButton changes = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(TitleScene.class, "changes")){
 				@Override
 				protected void onClick() {
@@ -134,7 +131,7 @@ public class WelcomeScene extends PixelScene {
 
 		RenderedTextBlock text = PixelScene.renderTextBlock(6);
 		String message;
-		if (previousVersion == 0) {
+		if (previousVersion == 0 || SPDSettings.intro()) {
 			message = Messages.get(this, "welcome_msg");
 		} else if (previousVersion <= ShatteredPixelDungeon.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
@@ -144,7 +141,7 @@ public class WelcomeScene extends PixelScene {
 				//TODO: change the messages here in accordance with the type of patch.
 				message = Messages.get(this, "patch_intro");
 				message += "\n";
-				//message += "\n" + Messages.get(this, "patch_balance");
+				message += "\n" + Messages.get(this, "patch_balance");
 				message += "\n" + Messages.get(this, "patch_bugfixes");
 				message += "\n" + Messages.get(this, "patch_translations");
 
@@ -181,25 +178,6 @@ public class WelcomeScene extends PixelScene {
 				FileUtils.deleteFile( Rankings.RANKINGS_FILE );
 				ShatteredPixelDungeon.reportException(e);
 			}
-		}
-		
-		//give classes to people with saves that have previously unlocked them
-		if (previousVersion <= ShatteredPixelDungeon.v0_7_0c){
-			Badges.loadGlobal();
-			Badges.addGlobal(Badges.Badge.UNLOCK_MAGE);
-			Badges.addGlobal(Badges.Badge.UNLOCK_ROGUE);
-			if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_3)){
-				Badges.addGlobal(Badges.Badge.UNLOCK_HUNTRESS);
-			}
-			Badges.saveGlobal();
-		}
-		
-		if (previousVersion <= ShatteredPixelDungeon.v0_6_5c){
-			Journal.loadGlobal();
-			Document.ALCHEMY_GUIDE.addPage("Potions");
-			Document.ALCHEMY_GUIDE.addPage("Stones");
-			Document.ALCHEMY_GUIDE.addPage("Energy_Food");
-			Journal.saveGlobal();
 		}
 		
 		SPDSettings.version(ShatteredPixelDungeon.versionCode);

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,6 +107,12 @@ public class SandalsOfNature extends Artifact {
 	}
 
 	@Override
+	public String name() {
+		if (level() == 0)   return super.name();
+		else                return Messages.get(this, "name_" + level());
+	}
+
+	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc_" + (level()+1));
 
@@ -135,7 +141,6 @@ public class SandalsOfNature extends Artifact {
 		else if (level() == 0)  image = ItemSpriteSheet.ARTIFACT_SHOES;
 		else if (level() == 1)  image = ItemSpriteSheet.ARTIFACT_BOOTS;
 		else if (level() >= 2)  image = ItemSpriteSheet.ARTIFACT_GREAVES;
-		name = Messages.get(this, "name_" + (level()+1));
 		return super.upgrade();
 	}
 
@@ -159,7 +164,6 @@ public class SandalsOfNature extends Artifact {
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle(bundle);
-		if (level() > 0) name = Messages.get(this, "name_" + level());
 		if (bundle.contains(SEEDS))
 			Collections.addAll(seeds , bundle.getClassArray(SEEDS));
 		if (level() == 1)  image = ItemSpriteSheet.ARTIFACT_SHOES;

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -290,10 +290,7 @@ public class Bomb extends Item {
 
 					} else {
 
-						heap.items.remove(bomb);
-						if (heap.items.isEmpty()) {
-							heap.destroy();
-						}
+						heap.remove(bomb);
 
 						bomb.explode(heap.pos);
 					}

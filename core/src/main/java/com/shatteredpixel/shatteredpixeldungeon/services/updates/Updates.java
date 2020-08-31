@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.services.updates;
 
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.watabou.utils.Callback;
 
 import java.util.Date;
 
@@ -89,6 +90,19 @@ public class Updates {
 	public static void launchInstall(){
 		if (supportsUpdates()){
 			service.initializeInstall();
+		}
+	}
+
+	public static void launchReview(Callback callback){
+		if (supportsUpdates()){
+			service.initializeReview(new UpdateService.ReviewResultCallback() {
+				@Override
+				public void onComplete() {
+					callback.call();
+				}
+			});
+		} else {
+			callback.call();
 		}
 	}
 

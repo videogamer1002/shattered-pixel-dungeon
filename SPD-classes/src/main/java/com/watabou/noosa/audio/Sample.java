@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ public enum Sample {
 		return play( id, volume, volume, pitch );
 	}
 	
-	public long play( Object id, float leftVolume, float rightVolume, float pitch ) {
+	public synchronized long play( Object id, float leftVolume, float rightVolume, float pitch ) {
 		float volume = Math.max(leftVolume, rightVolume);
 		float pan = rightVolume - leftVolume;
 		if (enabled && ids.containsKey( id )) {
@@ -116,7 +116,7 @@ public enum Sample {
 		float pitch;
 	}
 
-	private static HashSet<DelayedSoundEffect> delayedSFX = new HashSet<>();
+	private static final HashSet<DelayedSoundEffect> delayedSFX = new HashSet<>();
 
 	public void playDelayed( Object id, float delay ){
 		playDelayed( id, delay, 1 );
@@ -130,7 +130,7 @@ public enum Sample {
 		playDelayed( id, delay, volume, volume, pitch );
 	}
 
-	public synchronized void playDelayed( Object id, float delay, float leftVolume, float rightVolume, float pitch ) {
+	public void playDelayed( Object id, float delay, float leftVolume, float rightVolume, float pitch ) {
 		if (delay <= 0) {
 			play(id, leftVolume, rightVolume, pitch);
 			return;
@@ -141,16 +141,20 @@ public enum Sample {
 		sfx.leftVol = leftVolume;
 		sfx.rightVol = rightVolume;
 		sfx.pitch = pitch;
-		delayedSFX.add(sfx);
+		synchronized (delayedSFX) {
+			delayedSFX.add(sfx);
+		}
 	}
 
-	public synchronized void update(){
-		if (delayedSFX.isEmpty()) return;
-		for (DelayedSoundEffect sfx : delayedSFX.toArray(new DelayedSoundEffect[0])){
-			sfx.delay -= Game.elapsed;
-			if (sfx.delay <= 0){
-				delayedSFX.remove(sfx);
-				play(sfx.id, sfx.leftVol, sfx.rightVol, sfx.pitch);
+	public void update(){
+		synchronized (delayedSFX) {
+			if (delayedSFX.isEmpty()) return;
+			for (DelayedSoundEffect sfx : delayedSFX.toArray(new DelayedSoundEffect[0])) {
+				sfx.delay -= Game.elapsed;
+				if (sfx.delay <= 0) {
+					delayedSFX.remove(sfx);
+					play(sfx.id, sfx.leftVol, sfx.rightVol, sfx.pitch);
+				}
 			}
 		}
 	}

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
@@ -104,6 +103,7 @@ public class Eye extends Mob {
 	protected boolean act() {
 		if (beamCharged && state != HUNTING){
 			beamCharged = false;
+			sprite.idle();
 		}
 		if (beam == null && beamTarget != -1) {
 			beam = new Ballistica(pos, beamTarget, Ballistica.STOP_TERRAIN);
@@ -133,6 +133,7 @@ public class Eye extends Mob {
 				sprite.zap( beam.collisionPos );
 				return false;
 			} else {
+				sprite.idle();
 				deathGaze();
 				return true;
 			}
@@ -242,7 +243,7 @@ public class Eye extends Mob {
 	}
 	
 	{
-		immunities.add( Terror.class );
+		//immunities.add( Terror.class );
 	}
 
 	private class Hunting extends Mob.Hunting{

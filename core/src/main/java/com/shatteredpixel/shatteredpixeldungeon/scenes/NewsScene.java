@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2020 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -145,7 +145,12 @@ public class NewsScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				DeviceCompat.openURI("https://ShatteredPixel.com/");
+				String link = "https://ShatteredPixel.com";
+				//tracking codes, so that the website knows where this pageview came from
+				link += "?utm_source=shatteredpd";
+				link += "&utm_medium=news_page";
+				link += "&utm_campaign=ingame_link";
+				DeviceCompat.openURI(link);
 			}
 		};
 		btnSite.icon(Icons.get(Icons.NEWS));
@@ -261,7 +266,10 @@ public class NewsScene extends PixelScene {
 			this.article = article;
 
 			icon(News.parseArticleIcon(article));
-			if (article.date.getTime() > SPDSettings.newsLastRead()) textColor(Window.SHPX_COLOR);
+			long lastRead = SPDSettings.newsLastRead();
+			if (lastRead > 0 && article.date.getTime() > lastRead) {
+				textColor(Window.SHPX_COLOR);
+			}
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(article.date);

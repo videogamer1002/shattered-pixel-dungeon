@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ public class MageArmor extends ClassArmor {
 	@Override
 	public void doSpecial() {
 
-		Invisibility.dispel();
 		charge -= 35;
 		updateQuickslot();
 
@@ -59,6 +58,7 @@ public class MageArmor extends ClassArmor {
 		
 		curUser.spend( Actor.TICK );
 		curUser.sprite.operate( curUser.pos );
+		Invisibility.dispel();
 		curUser.busy();
 		
 		curUser.sprite.emitter().start( ElmoParticle.FACTORY, 0.025f, 20 );

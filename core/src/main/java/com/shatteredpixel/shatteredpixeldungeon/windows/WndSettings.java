@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,7 +136,8 @@ public class WndSettings extends WndTabbed {
 		height = Math.max(height, langs.height());
 		add( langs );
 
-		add( new IconTab(Icons.get(Icons.LANGS)){
+
+		IconTab langsTab = new IconTab(Icons.get(Icons.LANGS)){
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
@@ -157,7 +158,8 @@ public class WndSettings extends WndTabbed {
 				}
 			}
 
-		});
+		};
+		add( langsTab );
 
 		resize(width, (int)Math.ceil(height));
 

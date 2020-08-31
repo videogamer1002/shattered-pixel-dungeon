@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2020 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,81 @@ public class v0_8_X_Changes {
 		ChangeInfo changes = new ChangeInfo("v0.8.2", true, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
+
+		changes = new ChangeInfo("v0.8.2c&d", false, null);
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_Balance Changes:_\n" +
+				"_-_ Bleed from gripping/flashing traps reduced, but they are also affected less by armor.\n" +
+				"_-_ All effects which cancel invisibility and time freeze now fully resolve before they cancel invis/freeze.\n" +
+				"_-_ Swarm intelligence no longer triggers from allies, and no longer affects magically slept enemies.\n" +
+				"_-_ Evil eyes are no longer immune to terror\n\n" +
+				"_Smaller Tweaks:_\n" +
+				"_-_ The dried rose can no longer be sold if it contains a weapon or armor\n" +
+				"_-_ Tweaked item visibility in furrowed grass\n" +
+				"_-_ Adjusted sizing for inventory and message windows\n" +
+				"_-_ Items now automatically get added to bags if room is made for them by dropping/using something else\n" +
+				"_-_ Shortened game log text from well of awareness\n" +
+				"_-_ Slightly tweaked the sprites of tipped vs. untipped darts\n" +
+				"_-_ Torches now play a burning sound when ignited"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"Fixed (caused by v0.8.2):\n" +
+				"_-_ Various rare crash bugs\n" +
+				"_-_ Back button on hero select not appearing when it should\n" +
+				"_-_ Enchanted Mage's Staff not showing its enchantment name\n\n" +
+				"Fixed (existed prior to v0.8.2):\n" +
+				"_-_ Sniper shot incorrectly capping at 2.5x damage instead of 3x\n" +
+				"_-_ Golden Lotus having twice at much HP as intended\n" +
+				"_-_ Various rare crash bugs\n" +
+				"_-_ Lots of minor visual errors\n" +
+				"_-_ Particle effects rarely not appearing\n" +
+				"_-_ Visual errors with Goo's charge up particles\n" +
+				"_-_ DM-201s rarely tossing grenades though walls\n" +
+				"_-_ Various rare errors with blacksmith reforging\n" +
+				"_-_ Various minor errors with cursed wands and chaos elementals\n" +
+				"_-_ Terrored enemies not fleeing in some cases\n" +
+				"_-_ Various minor errors with the Tengu fight\n" +
+				"_-_ Acidic scorpios not always dropping potions of experience\n" +
+				"_-_ Some immovable enemies not knocking items away"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"Fixed (caused by v0.8.2c):\n" +
+				"_-_ Evil eyes unintentionally dealing 0 damage\n" +
+				"_-_ Piranhas dodging less than intended\n" +
+				"_-_ Rare crash/freeze bugs caused by changes to container functionality\n\n" +
+				"Fixed (caused by v0.8.2):\n" +
+				"_-_ Wand of fireblast opening doors out of its reach\n\n" +
+				"Fixed (existed prior to v0.8.2):\n" +
+				"_-_ Various rare crash bugs\n" +
+				"_-_ Various minor visual errors"));
+
+		changes = new ChangeInfo("v0.8.2a&b", false, null);
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"I've made a few small tweaks to the new player experience:\n" +
+				"_-_ Snakes now give new players a hint about surprise attacks after 3 misses, down from 5\n" +
+				"_-_ Accelerated the rate that guidebook pages drop on early floors\n" +
+				"_-_ The regular main menu is now only accessible after starting your first game\n\n" +
+				"_-_ Enemies now cannot spawn near to the player, even if they are out of the player's view\n\n" +
+				"_-_ Sped up loading times on Android when the game is relaunched\n\n" +
+				"_-_ Updated translations and translator credits"));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"Fixed (caused by v0.8.2):\n" +
+				"_-_ Various crash and freeze bugs\n" +
+				"_-_ Various text errors in the new settings window\n" +
+				"_-_ Item names not showing correctly when languages are swapped while ingame\n" +
+				"_-_ Clobber knockback not closing doors\n\n" +
+				"Fixed (existed prior to v0.8.2):\n" +
+				"_-_ Pickaxe not getting bloodied by killing bats in rare cases\n" +
+				"_-_ Dried rose ghost healing not respecting level lock limits\n" +
+				"_-_ Enemy respawn timer being reset by saving/loading the game\n" +
+				"_-_ Wraiths refusing to spawn over traps despite not being able to activate them"));
 
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"), false, null);
 		changes.hardlight(Window.TITLE_COLOR);

@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,8 +65,6 @@ public class WarriorArmor extends ClassArmor {
 				if (Actor.findChar( cell ) != null && cell != curUser.pos)
 					cell = route.path.get(route.dist-1);
 
-
-				Invisibility.dispel();
 				charge -= 35;
 				updateQuickslot();
 
@@ -90,6 +88,7 @@ public class WarriorArmor extends ClassArmor {
 						CellEmitter.center(dest).burst(Speck.factory(Speck.DUST), 10);
 						Camera.main.shake(2, 0.5f);
 
+						Invisibility.dispel();
 						curUser.spendAndNext(LEAP_TIME);
 					}
 				});

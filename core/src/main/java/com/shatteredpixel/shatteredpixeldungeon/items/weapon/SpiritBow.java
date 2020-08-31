@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,7 +169,7 @@ public class SpiritBow extends Weapon {
 					//as distance increases so does damage, capping at 3x:
 					//1.20x|1.35x|1.52x|1.71x|1.92x|2.16x|2.43x|2.74x|3.00x
 					int distance = Dungeon.level.distance(owner.pos, targetPos) - 1;
-					float multiplier = Math.min(2.5f, 1.2f * (float)Math.pow(1.125f, distance));
+					float multiplier = Math.min(3f, 1.2f * (float)Math.pow(1.125f, distance));
 					damage = Math.round(damage * multiplier);
 					break;
 			}
@@ -196,20 +196,13 @@ public class SpiritBow extends Weapon {
 	
 	@Override
 	public int level() {
-		//need to check if hero is null for loading an upgraded bow from pre-0.7.0
-		return (Dungeon.hero == null ? 0 : Dungeon.hero.lvl/5)
-				+ (curseInfusionBonus ? 1 : 0);
+		return (Dungeon.hero == null ? 0 : Dungeon.hero.lvl/5) + (curseInfusionBonus ? 1 : 0);
 	}
 
 	@Override
 	public int buffedLvl() {
 		//level isn't affected by buffs/debuffs
 		return level();
-	}
-
-	//for fetching upgrades from a boomerang from pre-0.7.1
-	public int spentUpgrades() {
-		return super.level() - (curseInfusionBonus ? 1 : 0);
 	}
 	
 	@Override

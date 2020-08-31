@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -210,8 +210,8 @@ public abstract class RegularLevel extends Level {
 					do {
 						mob.pos = pointToCell(roomToSpawn.random());
 						tries--;
-					} while (tries >= 0 && findMob(mob.pos) != null || !passable[mob.pos] || mob.pos == exit
-							|| (!openSpace[mob.pos] && mob.properties().contains(Char.Property.LARGE)));
+					} while (tries >= 0 && (findMob(mob.pos) != null || !passable[mob.pos] || mob.pos == exit
+							|| (!openSpace[mob.pos] && mob.properties().contains(Char.Property.LARGE))));
 
 					if (tries >= 0) {
 						mobsToSpawn--;
@@ -230,18 +230,18 @@ public abstract class RegularLevel extends Level {
 		}
 
 	}
-	
+
 	@Override
 	public int randomRespawnCell( Char ch ) {
 		int count = 0;
 		int cell = -1;
-		
+
 		while (true) {
-			
+
 			if (++count > 30) {
 				return -1;
 			}
-			
+
 			Room room = randomRoom( StandardRoom.class );
 			if (room == null || room == roomEntrance) {
 				continue;
@@ -256,7 +256,7 @@ public abstract class RegularLevel extends Level {
 					&& cell != exit) {
 				return cell;
 			}
-			
+
 		}
 	}
 	
@@ -398,14 +398,13 @@ public abstract class RegularLevel extends Level {
 			}
 		}
 
-		//these are dropped specially
+		//a total of 8 pages drop randomly, 2 pages are specially dropped
 		missingPages.remove(Document.GUIDE_INTRO_PAGE);
 		missingPages.remove(Document.GUIDE_SEARCH_PAGE);
 
-		int foundPages = allPages.size() - (missingPages.size() + 2);
-
 		//chance to find a page scales with pages missing and depth
-		if (missingPages.size() > 0 && Random.Float() < (Dungeon.depth/(float)(foundPages + 1))){
+		float dropChance = (missingPages.size() + Dungeon.depth - 1) / (float)(allPages.size() - 2);
+		if (!missingPages.isEmpty() && Random.Float() < dropChance){
 			GuidePage p = new GuidePage();
 			p.page(missingPages.get(0));
 			int cell = randomDropCell();

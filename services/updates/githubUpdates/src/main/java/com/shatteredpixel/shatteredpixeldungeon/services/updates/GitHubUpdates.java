@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ public class GitHubUpdates extends UpdateService {
 					Bundle latestRelease = null;
 					int latestVersionCode = Game.versionCode;
 
-					boolean includePrereleases = Game.version.toLowerCase().contains("beta");
+					boolean includePrereleases = Game.version.contains("-BETA-") || Game.version.contains("-RC-");
 
 					for (Bundle b : Bundle.read( httpResponse.getResultAsStream() ).getBundleArray()){
 						Matcher m = versionCodePattern.matcher(b.getString("body"));
@@ -135,4 +135,9 @@ public class GitHubUpdates extends UpdateService {
 		//does nothing, always installed
 	}
 
+	@Override
+	public void initializeReview(ReviewResultCallback callback) {
+		//does nothing, no review functionality here
+		callback.onComplete();
+	}
 }

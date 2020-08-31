@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -194,6 +194,9 @@ public class NewPrisonBossLevel extends Level {
 			Painter.set(this, p, Terrain.WALL_DECO);
 		}
 	}
+
+	//area where items/chars are preserved when moving to the arena
+	private static final Rect pauseSafeArea = new Rect(9, 2, 12, 12);
 
 	private void setMapPause(){
 		setMapStart();
@@ -416,7 +419,7 @@ public class NewPrisonBossLevel extends Level {
 				
 				Dungeon.hero.interrupt();
 				
-				clearEntities( arena ); //clear anything not in the arena
+				clearEntities( pauseSafeArea );
 				
 				setMapArena();
 				cleanMapState();
@@ -513,7 +516,7 @@ public class NewPrisonBossLevel extends Level {
 		tengu = new NewTengu(); //We want to keep track of tengu independently of other mobs, he's not always in the level.
 	}
 	
-	public Actor respawner() {
+	public Actor addRespawner() {
 		return null;
 	}
 	

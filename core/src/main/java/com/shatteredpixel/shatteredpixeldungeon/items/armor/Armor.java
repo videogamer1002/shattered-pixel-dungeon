@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,12 +139,6 @@ public class Armor extends EquipableItem {
 		inscribe((Glyph) bundle.get(GLYPH));
 		curseInfusionBonus = bundle.getBoolean( CURSE_INFUSION_BONUS );
 		seal = (BrokenSeal)bundle.get(SEAL);
-		
-		//pre-0.7.2 saves
-		if (bundle.contains( "unfamiliarity" )){
-			usesLeftToID = bundle.getInt( "unfamiliarity" );
-			availableUsesToID = USES_TO_ID/2f;
-		}
 		
 		augment = bundle.getEnum(AUGMENT, Augment.class);
 	}

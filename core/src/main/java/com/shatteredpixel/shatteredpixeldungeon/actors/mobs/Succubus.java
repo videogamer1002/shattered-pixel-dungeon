@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,8 +86,9 @@ public class Succubus extends Mob {
 			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 2 );
 			Sample.INSTANCE.play( Assets.Sounds.CHARMS );
 		} else if (Random.Int( 3 ) == 0) {
-			//attack will reduce by 5 turns, so effectively DURATION-5 turns
-			Buff.affect( enemy, Charm.class, Charm.DURATION ).object = id();
+			Charm c = Buff.affect( enemy, Charm.class, Charm.DURATION/2f );
+			c.object = id();
+			c.ignoreNextHit = true; //so that the -5 duration from succubus hit is ignored
 			enemy.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
 			Sample.INSTANCE.play( Assets.Sounds.CHARMS );
 		}

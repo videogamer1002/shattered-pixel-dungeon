@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -302,8 +302,7 @@ public class SPDSettings extends GameSettings {
 	}
 
 	public static long newsLastRead(){
-		//returns the current time when none is stored, so historical news isn't seen as unread
-		return getLong(KEY_NEWS_LAST_READ, Game.realTime);
+		return getLong(KEY_NEWS_LAST_READ, 0);
 	}
 	
 	//Window management (desktop only atm)

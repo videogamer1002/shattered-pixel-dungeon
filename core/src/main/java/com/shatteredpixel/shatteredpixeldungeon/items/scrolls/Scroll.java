@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -189,13 +190,11 @@ public abstract class Scroll extends Item {
 	}
 	
 	public abstract void doRead();
-	
-	//currently unused. Used to be used for unstable spellbook prior to 0.7.0
-	public void empoweredRead(){}
 
 	protected void readAnimation() {
 		curUser.spend( TIME_TO_READ );
 		curUser.busy();
+		Invisibility.dispel();
 		((HeroSprite)curUser.sprite).read();
 	}
 	
@@ -224,7 +223,7 @@ public abstract class Scroll extends Item {
 	
 	@Override
 	public String name() {
-		return isKnown() ? name : Messages.get(this, rune);
+		return isKnown() ? super.name() : Messages.get(this, rune);
 	}
 	
 	@Override

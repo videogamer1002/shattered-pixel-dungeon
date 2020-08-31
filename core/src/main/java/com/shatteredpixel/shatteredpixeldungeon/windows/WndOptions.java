@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,18 +39,23 @@ public class WndOptions extends Window {
 
 		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
-		RenderedTextBlock tfTitle = PixelScene.renderTextBlock( title, 9 );
-		tfTitle.hardlight( TITLE_COLOR );
-		tfTitle.setPos(MARGIN, MARGIN);
-		tfTitle.maxWidth(width - MARGIN * 2);
-		add( tfTitle );
+		float pos = MARGIN;
+		if (title != null) {
+			RenderedTextBlock tfTitle = PixelScene.renderTextBlock(title, 9);
+			tfTitle.hardlight(TITLE_COLOR);
+			tfTitle.setPos(MARGIN, pos);
+			tfTitle.maxWidth(width - MARGIN * 2);
+			add(tfTitle);
+
+			pos = tfTitle.bottom() + 3*MARGIN;
+		}
 		
 		RenderedTextBlock tfMesage = PixelScene.renderTextBlock( 6 );
 		tfMesage.text(message, width - MARGIN * 2);
-		tfMesage.setPos( MARGIN, tfTitle.bottom() + 3*MARGIN );
+		tfMesage.setPos( MARGIN, pos );
 		add( tfMesage );
 		
-		float pos = tfMesage.bottom() + 2*MARGIN;
+		pos = tfMesage.bottom() + 2*MARGIN;
 		
 		for (int i=0; i < options.length; i++) {
 			final int index = i;

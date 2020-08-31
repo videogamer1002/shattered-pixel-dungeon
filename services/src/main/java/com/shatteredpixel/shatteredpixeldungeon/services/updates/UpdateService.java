@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.services.updates;
 
+//TODO with install and review functionality, this service is less and less just about updates
+// perhaps rename to PlatformService, StoreService, DistributionService, etc?
 public abstract class UpdateService {
 
 	public static abstract class UpdateResultCallback {
@@ -40,5 +42,11 @@ public abstract class UpdateService {
 	public abstract boolean isInstallable();
 
 	public abstract void initializeInstall();
+
+	public static abstract class ReviewResultCallback {
+		public abstract void onComplete();
+	}
+
+	public abstract void initializeReview( ReviewResultCallback callback );
 
 }

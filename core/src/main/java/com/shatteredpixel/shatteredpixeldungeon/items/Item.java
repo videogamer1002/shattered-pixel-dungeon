@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,8 +64,8 @@ public class Item implements Bundlable {
 	
 	public String defaultAction;
 	public boolean usesTargeting;
-	
-	protected String name = Messages.get(this, "name");
+
+	//TODO should these be private and accessed through methods?
 	public int image = 0;
 	public int icon = -1; //used as an identifier for items with randomized images
 	
@@ -120,10 +120,7 @@ public class Item implements Bundlable {
 	}
 
 	//resets an item's properties, to ensure consistency between runs
-	public void reset(){
-		//resets the name incase the language has changed.
-		name = Messages.get(this, "name");
-	}
+	public void reset(){}
 
 	public void doThrow( Hero hero ) {
 		GameScene.selectCell(thrower);
@@ -171,6 +168,10 @@ public class Item implements Bundlable {
 	}
 	
 	public boolean collect( Bag container ) {
+
+		if (quantity <= 0){
+			return true;
+		}
 
 		ArrayList<Item> items = container.items;
 
@@ -273,6 +274,7 @@ public class Item implements Bundlable {
 			if (item == this) {
 				container.items.remove(this);
 				item.onDetach();
+				container.grabItems(); //try to put more items into the bag as it now has free space
 				return this;
 			} else if (item instanceof Bag) {
 				Bag bag = (Bag)item;
@@ -404,11 +406,11 @@ public class Item implements Bundlable {
 	}
 	
 	public String name() {
-		return name;
+		return trueName();
 	}
 	
 	public final String trueName() {
-		return name;
+		return Messages.get(this, "name");
 	}
 	
 	public int image() {

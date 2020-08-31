@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,16 +55,15 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Speed;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Stamina;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
-import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
+import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
@@ -132,7 +131,23 @@ public abstract class Char extends Actor {
 			fieldOfView = new boolean[Dungeon.level.length()];
 		}
 		Dungeon.level.updateFieldOfView( this, fieldOfView );
+
+		//throw any items that are on top of an immovable char
+		if (properties.contains(Property.IMMOVABLE)){
+			throwItems();
+		}
 		return false;
+	}
+
+	protected void throwItems(){
+		Heap heap = Dungeon.level.heaps.get( pos );
+		if (heap != null && heap.type == Heap.Type.HEAP) {
+			int n;
+			do {
+				n = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
+			} while (!Dungeon.level.passable[n] && !Dungeon.level.avoid[n]);
+			Dungeon.level.drop( heap.pickUp(), n ).sprite.drop( pos );
+		}
 	}
 
 	public String name(){
@@ -226,18 +241,6 @@ public abstract class Char extends Actor {
 		for (Bundlable b : bundle.getCollection( BUFFS )) {
 			if (b != null) {
 				((Buff)b).attachTo( this );
-			}
-		}
-		
-		//pre-0.7.0
-		if (bundle.contains( "SHLD" )){
-			int legacySHLD = bundle.getInt( "SHLD" );
-			//attempt to find the buff that may have given the shield
-			ShieldBuff buff = buff(Brimstone.BrimstoneShield.class);
-			if (buff != null) legacySHLD -= buff.shielding();
-			if (legacySHLD > 0){
-				BrokenSeal.WarriorShield buff2 = buff(BrokenSeal.WarriorShield.class);
-				if (buff != null) buff2.supercharge(legacySHLD);
 			}
 		}
 	}

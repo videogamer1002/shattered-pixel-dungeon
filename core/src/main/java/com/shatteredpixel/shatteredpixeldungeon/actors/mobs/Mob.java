@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,6 +181,10 @@ public abstract class Mob extends Char {
 			spend( TICK );
 			return true;
 		}
+
+		if (buff(Terror.class) != null){
+			state = FLEEING;
+		}
 		
 		enemy = chooseEnemy();
 		
@@ -228,8 +232,8 @@ public abstract class Mob extends Char {
 		//We are charmed and current enemy is what charmed us
 		} else if (buff(Charm.class) != null && buff(Charm.class).object == enemy.id()) {
 			newEnemy = true;
-		//we aren't amoked and current enemy is invulnerable to us
-		} else if (buff( Amok.class ) == null && enemy.isInvulnerable(getClass())) {
+		//we aren't amoked, current enemy is invulnerable to us, and that enemy isn't affect by aggression
+		} else if (buff( Amok.class ) == null && enemy.isInvulnerable(getClass()) && enemy.buff(StoneOfAggression.Aggression.class) == null) {
 			newEnemy = true;
 		}
 
@@ -333,8 +337,12 @@ public abstract class Mob extends Char {
 	public void remove( Buff buff ) {
 		super.remove( buff );
 		if (buff instanceof Terror) {
-			sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "rage") );
-			state = HUNTING;
+			if (enemySeen) {
+				sprite.showStatus(CharSprite.NEGATIVE, Messages.get(this, "rage"));
+				state = HUNTING;
+			} else {
+				state = WANDERING;
+			}
 		}
 	}
 	
@@ -525,9 +533,7 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
-		boolean seen = (enemySeen && enemy.invisible == 0);
-		if (enemy == Dungeon.hero && !Dungeon.hero.canSurpriseAttack()) seen = true;
-		if ( seen
+		if ( !surprisedBy(enemy)
 				&& paralysed == 0
 				&& !(alignment == Alignment.ALLY && enemy == Dungeon.hero)) {
 			return this.defenseSkill;
@@ -545,7 +551,7 @@ public abstract class Mob extends Char {
 			hitWithRanged = true;
 		}
 		
-		if (surprisedBy(enemy) && Dungeon.hero.canSurpriseAttack()) {
+		if (surprisedBy(enemy)) {
 			Statistics.sneakAttacks++;
 			Badges.validateRogueUnlock();
 			//TODO this is somewhat messy, it would be nicer to not have to manually handle delays here
@@ -587,7 +593,9 @@ public abstract class Mob extends Char {
 	}
 
 	public boolean surprisedBy( Char enemy ){
-		return enemy == Dungeon.hero && (enemy.invisible > 0 || (!enemySeen && state != PASSIVE));
+		return enemy == Dungeon.hero
+				&& (enemy.invisible > 0 || !enemySeen)
+				&& ((Hero)enemy).canSurpriseAttack();
 	}
 
 	public void aggro( Char ch ) {
@@ -730,7 +738,7 @@ public abstract class Mob extends Char {
 		
 		notice();
 		
-		if (state != HUNTING) {
+		if (state != HUNTING && state != FLEEING) {
 			state = WANDERING;
 		}
 		target = cell;
@@ -772,10 +780,12 @@ public abstract class Mob extends Char {
 				state = HUNTING;
 				target = enemy.pos;
 
-				if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
+				if (alignment == Alignment.ENEMY && Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
 					for (Mob mob : Dungeon.level.mobs) {
-						if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
-							if (mob.buffs(MagicalSleep.class) == null) mob.beckon( target );
+						if (mob.paralysed <= 0
+								&& Dungeon.level.distance(pos, mob.pos) <= 8 //TODO base on pathfinder distance instead?
+								&& mob.state != mob.HUNTING) {
+                            if (mob.buffs(MagicalSleep.class) == null) mob.beckon( target );
 						}
 					}
 				}
@@ -818,13 +828,12 @@ public abstract class Mob extends Char {
 			state = HUNTING;
 			target = enemy.pos;
 			
-			if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
+			if (alignment == Alignment.ENEMY && Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
 				for (Mob mob : Dungeon.level.mobs) {
-					if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
-
-						if (mob.buffs(MagicalSleep.class) == null) mob.beckon( target );
-
-
+					if (mob.paralysed <= 0
+							&& Dungeon.level.distance(pos, mob.pos) <= 8 //TODO base on pathfinder distance instead?
+							&& mob.state != mob.HUNTING) {
+                        if (mob.buffs(MagicalSleep.class) == null) mob.beckon( target );
 					}
 				}
 			}
@@ -940,7 +949,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			enemySeen = false;
+			enemySeen = enemyInFOV;
 			spend( TICK );
 			return true;
 		}

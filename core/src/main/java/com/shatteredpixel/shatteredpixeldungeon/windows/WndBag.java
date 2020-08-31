@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,11 +98,11 @@ public class WndBag extends WndTabbed {
 	protected static final int COLS_P   = 5;
 	protected static final int COLS_L   = 5;
 	
-	protected static int SLOT_WIDTH_P   = 24;
+	protected static int SLOT_WIDTH_P   = 28;
 	protected static int SLOT_WIDTH_L   = 28;
 
 	protected static int SLOT_HEIGHT_P	= 28;
-	protected static int SLOT_HEIGHT_L	= 24;
+	protected static int SLOT_HEIGHT_L	= 28;
 
 	protected static final int SLOT_MARGIN	= 1;
 	
@@ -113,6 +113,7 @@ public class WndBag extends WndTabbed {
 	private String title;
 
 	private int nCols;
+	private int nRows;
 
 	private int slotWidth;
 	private int slotHeight;
@@ -144,15 +145,28 @@ public class WndBag extends WndTabbed {
 		slotHeight = PixelScene.landscape() ? SLOT_HEIGHT_L : SLOT_HEIGHT_P;
 
 		nCols = PixelScene.landscape() ? COLS_L : COLS_P;
-		int slotsWidth = slotWidth * nCols + SLOT_MARGIN * (nCols - 1);
+		nRows = (int)Math.ceil(25/(float)nCols); //we expect to lay out 25 slots in all cases
 
-		placeTitle( bag, slotsWidth );
+		int windowWidth = slotWidth * nCols + SLOT_MARGIN * (nCols - 1);
+		int windowHeight = TITLE_HEIGHT + slotHeight * nRows + SLOT_MARGIN * (nRows - 1);
+
+		if (PixelScene.landscape()){
+			while (slotHeight >= 24 && (windowHeight + 20 + chrome.marginTop()) > PixelScene.uiCamera.height){
+				slotHeight--;
+				windowHeight -= nRows;
+			}
+		} else {
+			while (slotWidth >= 26 && (windowWidth + chrome.marginHor()) > PixelScene.uiCamera.width){
+				slotWidth--;
+				windowWidth -= nCols;
+			}
+		}
+
+		placeTitle( bag, windowWidth );
 		
 		placeItems( bag );
 
-		int slotsHeight = slotHeight * row + SLOT_MARGIN * (row - 1);
-
-		resize( slotsWidth, slotsHeight + TITLE_HEIGHT );
+		resize( windowWidth, windowHeight );
 
 		Belongings stuff = Dungeon.hero.belongings;
 		Bag[] bags = {
@@ -333,14 +347,16 @@ public class WndBag extends WndTabbed {
 	}
 	
 	public static class Placeholder extends Item {
-		{
-			name = null;
-		}
-		
-		public Placeholder( int image ) {
+
+		public Placeholder(int image ) {
 			this.image = image;
 		}
-		
+
+		@Override
+		public String name() {
+			return null;
+		}
+
 		@Override
 		public boolean isIdentified() {
 			return true;
