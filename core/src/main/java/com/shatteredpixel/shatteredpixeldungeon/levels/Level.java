@@ -1026,7 +1026,7 @@ public abstract class Level implements Bundlable {
 				|| c instanceof YogFist.SoiledFist) {
 				blocking = Dungeon.level.losBlocking.clone();
 				for (int i = 0; i < blocking.length; i++){
-					if (blocking[i] && (Dungeon.level.map[i] == Terrain.HIGH_GRASS || Dungeon.level.map[i] == Terrain.FURROWED_GRASS)){
+					if (blocking[i] && (Dungeon.level.map[i] == Terrain.FURROWED_GRASS)){
 						blocking[i] = false;
 					}
 				}

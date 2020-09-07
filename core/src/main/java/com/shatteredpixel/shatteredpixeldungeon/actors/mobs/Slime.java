@@ -35,7 +35,7 @@ public class Slime extends Mob {
 	{
 		spriteClass = SlimeSprite.class;
 		
-		HP = HT = 20;
+		HP = HT = 18;
 		defenseSkill = 5;
 		
 		EXP = 4;
@@ -56,9 +56,9 @@ public class Slime extends Mob {
 	
 	@Override
 	public void damage(int dmg, Object src) {
-		if (dmg >= 5){
+		if (dmg >= 6){
 			//takes 5/6/7/8/9/10 dmg at 5/7/10/14/19/25 incoming dmg
-			dmg = 4 + (int)(Math.sqrt(8*(dmg - 4) + 1) - 1)/2;
+			dmg = 5 + (int)(Math.sqrt(8*(dmg - 4) + 1) - 1)/2;
 		}
 		super.damage(dmg, src);
 	}

@@ -58,11 +58,11 @@ import java.io.IOException;
 public class InterlevelScene extends PixelScene {
 	
 	//slow fade on entering a new region
-	private static final float SLOW_FADE = 1f; //.33 in, 1.33 steady, .33 out, 2 seconds total
+	private static final float SLOW_FADE = 1.5f; //.33 in, 1.33 steady, .33 out, 2 seconds total
 	//norm fade when loading, falling, returning, or descending to a new floor
-	private static final float NORM_FADE = 0.25f; //.33 in, .67 steady, .33 out, 1.33 seconds total
+	private static final float NORM_FADE = 1f; //.33 in, .67 steady, .33 out, 1.33 seconds total
 	//fast fade when ascending, or descending to a floor you've been on
-	private static final float FAST_FADE = 0.25f; //.33 in, .33 steady, .33 out, 1 second total
+	private static final float FAST_FADE = 1f; //.33 in, .33 steady, .33 out, 1 second total
 	
 	private static float fadeTime;
 	

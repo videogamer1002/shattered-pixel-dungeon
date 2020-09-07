@@ -43,14 +43,8 @@ public class Blazing extends Weapon.Enchantment {
 		int level = Math.max( 0, weapon.buffedLvl() );
 		
 		if (Random.Int( level + 3 ) >= 2) {
-			
-			if (defender.buff(Burning.class) != null){
-				Buff.affect(defender, Burning.class).reignite(defender, 8f);
-				int burnDamage = Random.NormalIntRange( 1, 3 + Dungeon.depth/4 );
-				defender.damage( Math.round(burnDamage * 0.67f), this );
-			} else {
-				Buff.affect(defender, Burning.class).reignite(defender, 8f);
-			}
+
+				Buff.affect(defender, Burning.class).reignite(defender, 4f + level);
 			
 			defender.sprite.emitter().burst( FlameParticle.FACTORY, level + 1 );
 			

@@ -103,7 +103,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 	public void miss( Char enemy ){
 		misses++;
 		comboTime = 4f;
-		if (misses >= 2){
+		if (misses >= 3){
 			detach();
 		}
 	}

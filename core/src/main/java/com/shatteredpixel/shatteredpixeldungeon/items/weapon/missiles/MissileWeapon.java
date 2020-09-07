@@ -182,6 +182,7 @@ abstract public class MissileWeapon extends Weapon {
 		//2: 66.67% (2/3)
 		//3: 26.67% (4/15)
 		//4: 6.67%  (1/15)
+
 		quantity = 2;
 		if (Random.Int(3) == 0) {
 			quantity++;
@@ -189,6 +190,14 @@ abstract public class MissileWeapon extends Weapon {
 				quantity++;
 			}
 		}
+
+		if (quantity == 2 && Random.Int(5) == 0) {
+			level(level()+1);
+			if (Random.Int(5) == 0) {
+				level(level()+1);
+			}
+		}
+
 		return this;
 	}
 	

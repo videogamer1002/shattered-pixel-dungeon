@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.KingSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.NecromancerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShamanSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.SlimeSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SnakeSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SpawnerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.StatueSprite;
@@ -96,9 +97,10 @@ public class v9_1_X_Changes {
 				"_-_ Various tutorial elements removed\n" +
 				"_-_ Adventurers' Guide and Alchemy Guide are filled by default"));
 		changes.addButton(new ChangeButton(new Image (Icons.get(Icons.CHALLENGE_ON)), "Challenge Changes",
-                "_-_ Swarm Intelligence will no longer wake magically sleeping enemies"));
+                "_-_ Swarm Intelligence will no longer wake magically sleeping enemies\n" +
+						"_-_ "));
 		changes.addButton(new ChangeButton(new Image (Icons.get(Icons.PREFS)), "Miscellaneous Changes",
-				"_-_ Level transitions are faster"));
+				"_-_ "));
 		changes.addButton(new ChangeButton(new Image (new SnakeSprite()), "Sewer Snake",
 				"_-_ The sewer snake now has 6HP, up from 4"));
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.SPIRIT_BOW), "Spirit Bow",
@@ -106,6 +108,22 @@ public class v9_1_X_Changes {
 				"_-_ The Bow no longer pierces armor as the Sniper"));
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.PICKAXE), "Pickaxe",
 				"_-_ The Pickaxe is now upgradable with +1/+3 scaling"));
-	}
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_ROSE2), "Dried Rose",
+				"_-_ The Dried Rose is now usable before completing the Sad Ghost's quest"));
+        changes.addButton( new ChangeButton( new Image(Assets.Sprites.HUNTRESS, 0, 90, 12, 15), "Huntress",
+                "_-_ The Warden can now only see through furrowed grass"));
+        changes.addButton( new ChangeButton( new Image(Assets.Sprites.WARRIOR, 0, 90, 12, 15), "Gladiator",
+                "_-_ The Gladiator now loses combo when missing 3 times in a row, up from 2"));
+        changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SWORD, new ItemSprite.Glowing(0xFF0000)), "Enchantment Changes",
+                "_-_ Blazing bonus damage has been removed\n" +
+                        "_-_ Blazing fire duration is now 4+level turns, previously 8 turns."));
+        changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_TOOLKIT), "Artifact's Toolkit",
+                "_-_ The Alchemist's Toolkit has been temporarily removed"));
+		changes.addButton( new ChangeButton(new Image(new SlimeSprite()), "Slime",
+				"_-_ Slime HP has been reduced from 20 to 18\n" +
+						"_-_ Slime damage resistance has been reduced by one"));
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.SCROLL_TIWAZ), "Changes",
+				"_-_ "));
+    }
 
 }
